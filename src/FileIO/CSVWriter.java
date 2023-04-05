@@ -1,4 +1,4 @@
-package book;
+package FileIO;
 
 import java.io.FileWriter;   // Import the FileWriter class
 import java.io.IOException;  // Import the IOException class to handle errors
@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-public class Publisher {
+public class CSVWriter {
     private final String path;
     final int UNIT_MIN = 60;
     final int UNIT_MAX = 100;
@@ -19,9 +19,9 @@ public class Publisher {
     Random rand = new Random();
     final String[] LANGUAGES = {"German", "Turkish", "Italian", "Spanish"};
     final String[] QUESTION_TYPES = {"R", "L", "S", "W"};
-    final String SEPERATOR = ", ";
+    final String SEPARATOR = ",";
 
-    public Publisher(String bookPath) {
+    public CSVWriter(String bookPath) {
         this.path = bookPath;
     }
 
@@ -31,14 +31,14 @@ public class Publisher {
             System.out.println("Successfully wrote to the file.");
             for (String language : LANGUAGES) {
                 // unit generator
-                StringBuilder line = new StringBuilder(language).append(SEPERATOR);
+                StringBuilder line = new StringBuilder(language).append(SEPARATOR);
                 int unitCount = rand.nextInt(UNIT_MIN, UNIT_MAX + 1);
                 for (int i = 1; i <= unitCount; i++) {
-                    line.append("UNIT").append(i).append(SEPERATOR);
+                    line.append("UNIT").append(i).append(SEPARATOR);
                     // quiz generator
                     int quizCount = rand.nextInt(QUIZ_MIN, QUIZ_MAX + 1);
                     for (int j = 1; j <= quizCount; j++) {
-                        line.append("QUIZ").append(j).append(SEPERATOR);
+                        line.append("QUIZ").append(j).append(SEPARATOR);
                         // question generator
                         int questionCount = rand.nextInt(QUESTION_MIN, QUESTION_MAX + 1);
                         Map<String, Integer> questionCountsMatching = new HashMap<>() {{
@@ -62,7 +62,7 @@ public class Publisher {
                             } else quizQuestions.append(":").append(count).append(qType);
 
                         }
-                        line.append(quizQuestions).append(SEPERATOR);
+                        line.append(quizQuestions).append(SEPARATOR);
                     }
                 }
                 if (!language.equals(LANGUAGES[LANGUAGES.length - 1])) line.append("\n");
