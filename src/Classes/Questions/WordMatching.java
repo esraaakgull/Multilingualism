@@ -1,10 +1,13 @@
-package AbstractClasses;
+package Classes.Questions;
+
+import AbstractClasses.AQuestion;
 
 import java.util.Dictionary;
 
-public class QListening extends Question {
-    public QListening(Integer questionNumber, String questionType, Integer questionPoint, Dictionary<String, Integer> questionContent) {
-        super(questionNumber, questionType, questionPoint, questionContent);
+public class WordMatching extends AQuestion {
+
+    public WordMatching() {
+        setQuestionPoint(5);
     }
 
     @Override
@@ -15,16 +18,6 @@ public class QListening extends Question {
     @Override
     public void setQuestionNumber(Integer questionNumber) {
         super.setQuestionNumber(questionNumber);
-    }
-
-    @Override
-    public String getQuestionType() {
-        return super.getQuestionType();
-    }
-
-    @Override
-    public void setQuestionType(String questionType) {
-        super.setQuestionType(questionType);
     }
 
     @Override
@@ -47,4 +40,3 @@ public class QListening extends Question {
         super.setQuestionContent(questionContent);
     }
 }
-

@@ -2,17 +2,16 @@ package AbstractClasses;
 
 import java.util.Dictionary;
 
-public abstract class Question {
+public abstract class AQuestion {
     Integer questionNumber;
-    String questionType;
     Integer questionPoint;
+
+    //questionContent type will be differed for each question
+    // for reading consist of 2 string, listening consist of 1 string and 1 integer...
+    // we should do it generic and define in each question type
     Dictionary<String, Integer> questionContent;
 
-    public Question(Integer questionNumber, String questionType, Integer questionPoint, Dictionary<String, Integer> questionContent) {
-        this.questionNumber = questionNumber;
-        this.questionType = questionType;
-        this.questionPoint = questionPoint;
-        this.questionContent = questionContent;
+    public AQuestion() {
     }
 
     public Integer getQuestionNumber() {
@@ -23,13 +22,6 @@ public abstract class Question {
         this.questionNumber = questionNumber;
     }
 
-    public String getQuestionType() {
-        return questionType;
-    }
-
-    public void setQuestionType(String questionType) {
-        this.questionType = questionType;
-    }
 
     public Integer getQuestionPoint() {
         return questionPoint;
