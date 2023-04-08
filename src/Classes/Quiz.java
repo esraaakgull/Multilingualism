@@ -1,21 +1,27 @@
 package Classes;
+
+import AbstractClasses.AQuestion;
+import Classes.Questions.Listening;
+import Classes.Questions.Reading;
+import Classes.Questions.Speaking;
+import Classes.Questions.WordMatching;
+
 import java.util.Random;
 
 public class Quiz {
     Integer quizNumber;
     Integer totalQuizPoints;
 
+    AQuestion[] questions;
     Random rand = new Random();
 
-    // where should we hold all questions for a quiz
-    // Question[] questions;
+    public Quiz(Integer quizNumber, AQuestion[] question) {
+        this.quizNumber = quizNumber;
+        this.questions = question;
+    }
 
     public Integer getQuizNumber() {
         return quizNumber;
-    }
-
-    public void setQuizNumber(Integer quizNumber) {
-        this.quizNumber = quizNumber;
     }
 
     public Integer getTotalQuizPoints() {

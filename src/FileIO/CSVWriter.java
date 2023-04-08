@@ -74,6 +74,5 @@ public class CSVWriter {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
-        // language generator
     }
 }

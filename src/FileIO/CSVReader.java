@@ -1,25 +1,29 @@
 package FileIO;
 
-import Classes.Language;
-import Classes.Questions.Contents.StringContent;
-import Classes.Questions.Reading;
-import Classes.User;
+import AbstractClasses.AQuestion;
 import Factory.LanguageFactory;
 import Factory.UserFactory;
+
+import java.io.IOException;  // Import the IOException class to handle errors
+
+import Classes.Language;
+
+import Classes.Quiz;
+import Classes.Unit;
 import utils.Randomizer;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class CSVReader {
     private final String languagesPath;
     private final String usersPath;
     private final BufferedReader languagesReader;
     private final BufferedReader usersReader;
+
+    public Language[] generatedLanguages;
 
     //    private final Matcher matcher = Pattern.compile();
     public CSVReader(String languagesPath, String usersPath) throws FileNotFoundException {
@@ -34,18 +38,53 @@ public class CSVReader {
             String line = languagesReader.readLine();
             if (line != null) {
                 String[] languageAndLine = line.split(",", 2);
+                // Language object initialization
+                Language language = new Language(languageAndLine[0]);
                 System.out.println(languageAndLine[0]);
-                String[] units = languageAndLine[1].split("UNIT[1-9][0-9]*");
-                for (int i = 1; i < units.length; i++) {
-                    System.out.println("UNIT" + i + " " + units[i]);
-                    String[] unitContents = units[i].split("QUIZ[1-9][0-9]*");
+                String[] unitNums = languageAndLine[1].split("UNIT[1-9][0-9]*");
+                ArrayList<Unit> units = new ArrayList<>();
+                for (int i = 1; i < unitNums.length; i++) {
+                    // Unit object initialization
+//                    Unit unit = new Unit(i);
+                    System.out.println("UNIT" + i + " " + unitNums[i]);
+                    ArrayList<Quiz> quizzes = new ArrayList<>();
+                    String[] unitContents = unitNums[i].split("QUIZ[1-9][0-9]*");
                     for (int j = 1; j < unitContents.length; j++) {
-                        System.out.println("QUIZ" + j + " " + unitContents[j].split(",")[1]);
+//                        System.out.println("QUIZ" + j + " " + unitContents[j].split(",")[1]);
                         String[] quizQuestions = unitContents[j].split(",")[1].split(":");
+                        ArrayList<AQuestion> questions = new ArrayList<>();
                         for (String question : quizQuestions) {
-                            //todo burada language oluştur, sırayla soru, sonra quiz, unit ve language
+                            int numberOfQuestion = Integer.parseInt(question.substring(0, question.length() - 1));
+                            // if it is Reading Question
+                            if (question.charAt(question.length() - 1) == 'R') {
+                                for (int x = 0; x < numberOfQuestion; x++) {
+                                    questions.add(languageFactory.generateReadingQ());
+                                }
+                            }
+                            // if it is Listening Question
+                            if (question.charAt(question.length() - 1) == 'L') {
+                                for (int x = 0; x < numberOfQuestion; x++) {
+                                    questions.add(languageFactory.generateListeningQ());
+                                }
+                            }
+                            // if it is Speaking Question
+                            if (question.charAt(question.length() - 1) == 'S') {
+                                for (int x = 0; x < numberOfQuestion; x++) {
+                                    questions.add(languageFactory.generateSpeakingQ());
+                                }
+                            }
+                            // if it is Word Matching Question
+                            if (question.charAt(question.length() - 1) == 'W') {
+                                for (int x = 0; x < numberOfQuestion; x++) {
+                                    questions.add(languageFactory.generateWordMatchingQ());
+                                }
+                            }
                         }
+                        Quiz quiz = new Quiz(j, questions);
+                        quizzes.add(quiz);
                     }
+                    Unit unit= new Unit(i, unitNums);
+                    units.add(unit);
                 }
             } else {
                 System.out.println("All the lines have been read.");

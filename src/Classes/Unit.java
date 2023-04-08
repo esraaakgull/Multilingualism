@@ -2,31 +2,28 @@ package Classes;
 
 public class Unit {
     Integer unitNumber;
-    Integer numberOfQuizzes;
+    Integer i = 0;
     Quiz[] quizzes;
+
+    public Unit(Integer unitNum) {
+        this.unitNumber = unitNum;
+    }
 
     public Integer getUnitNumber() {
         return unitNumber;
     }
 
-    public void setUnitNumber(Integer unitNumber) {
-        this.unitNumber = unitNumber;
-    }
-
     public Integer getNumberOfQuizzes() {
-        return numberOfQuizzes;
-    }
-
-    public void setNumberOfQuizzes(Integer numberOfQuizzes) {
-        this.numberOfQuizzes = numberOfQuizzes;
+        return quizzes.length;
     }
 
     public Quiz[] getQuizzes() {
         return quizzes;
     }
 
-    public void setQuizzes(Quiz[] quizzes) {
-        this.quizzes = quizzes;
+    public void addQuizzes(Quiz quiz) {
+        this.quizzes[i] = quiz;
+        i++;
     }
 
 
