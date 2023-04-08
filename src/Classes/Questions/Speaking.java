@@ -1,42 +1,15 @@
 package Classes.Questions;
 
 import AbstractClasses.AQuestion;
+import Classes.Questions.Contents.AudioContent;
 
 import java.util.Dictionary;
+import java.util.HashMap;
 
-public class Speaking extends AQuestion {
+public class Speaking extends AQuestion<AudioContent, AudioContent> {
 
-    public Speaking() {
-        setQuestionPoint(8);
+    public Speaking(HashMap<AudioContent, AudioContent> questionContent) {
+        super(8, questionContent);
     }
 
-    @Override
-    public Integer getQuestionNumber() {
-        return super.getQuestionNumber();
-    }
-
-    @Override
-    public void setQuestionNumber(Integer questionNumber) {
-        super.setQuestionNumber(questionNumber);
-    }
-
-    @Override
-    public Integer getQuestionPoint() {
-        return super.getQuestionPoint();
-    }
-
-    @Override
-    public void setQuestionPoint(Integer questionPoint) {
-        super.setQuestionPoint(questionPoint);
-    }
-
-    @Override
-    public Dictionary<String, Integer> getQuestionContent() {
-        return super.getQuestionContent();
-    }
-
-    @Override
-    public void setQuestionContent(Dictionary<String, Integer> questionContent) {
-        super.setQuestionContent(questionContent);
-    }
 }

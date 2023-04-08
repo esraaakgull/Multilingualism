@@ -1,13 +1,8 @@
 package Classes.Questions.Contents;
 
-public class StringContent extends Content {
-    private final String content;
-    StringContent(String text){
-        this.content = text;
+public class StringContent extends Content<String> {
+    public StringContent(String text) {
+        super(text);
     }
 
-    @Override
-    String getContent() {
-        return this.content;
-    }
 }

@@ -1,11 +1,16 @@
-import Classes.FileIO.CSVReader;
-import Classes.FileIO.CSVWriter;
+import Factory.LanguageFactory;
+import Factory.UserFactory;
+import FileIO.CSVReader;
+import FileIO.CSVWriter;
 
 import java.io.File;  // Import the File class
 import java.io.IOException;  // Import the IOException class to handle errors
 
 public class Main {
-    static final String bookPath = "src/languages.csv";
+    static final String bookPath = "src/assets/languages.csv";
+    static final String usersPath = "src/assets/users.csv";
+    static UserFactory userFactory = new UserFactory();
+    static LanguageFactory languageFactory = new LanguageFactory();
 
     public static void main(String[] args) {
         try {
@@ -14,15 +19,16 @@ public class Main {
                 System.out.println("File created.");
                 CSVWriter writer = new CSVWriter(bookPath);
                 writer.publish();
-            } else {
-                System.out.println("File already exists.");
-                CSVReader reader = new CSVReader(bookPath);
-                reader.ParseFile();
             }
+            System.out.println("Reading files.");
+            CSVReader reader = new CSVReader(bookPath, usersPath);
+            reader.ParseLanguageCSV(languageFactory);
+            reader.ParseUsersCSV(languageFactory, userFactory);
 
         } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
+        System.out.println("end");
     }
 }

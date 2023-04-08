@@ -1,43 +1,14 @@
 package Classes.Questions;
 
 import AbstractClasses.AQuestion;
+import Classes.Questions.Contents.Content;
+import Classes.Questions.Contents.StringContent;
 
-import java.util.Dictionary;
+import java.util.HashMap;
 
-public class Reading extends AQuestion {
+public class Reading extends AQuestion<StringContent, StringContent> {
 
-    public Reading() {
-        setQuestionPoint(10);
+    public Reading(HashMap<StringContent,StringContent> questionContent) {
+        super( 10, questionContent);
     }
-
-    @Override
-    public Integer getQuestionNumber() {
-        return super.getQuestionNumber();
-    }
-
-    @Override
-    public void setQuestionNumber(Integer questionNumber) {
-        super.setQuestionNumber(questionNumber);
-    }
-
-    @Override
-    public Integer getQuestionPoint() {
-        return super.getQuestionPoint();
-    }
-
-    @Override
-    public void setQuestionPoint(Integer questionPoint) {
-        super.setQuestionPoint(questionPoint);
-    }
-
-    @Override
-    public Dictionary<String, Integer> getQuestionContent() {
-        return super.getQuestionContent();
-    }
-
-    @Override
-    public void setQuestionContent(Dictionary<String, Integer> questionContent) {
-        super.setQuestionContent(questionContent);
-    }
-
 }

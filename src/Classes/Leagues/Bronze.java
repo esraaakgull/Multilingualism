@@ -13,17 +13,8 @@ public class Bronze extends ALeague {
     }
 
     @Override
-    public void removeUserFromTheLig(User user) {
-        super.removeUserFromTheLig(user);
+    protected boolean passesLeagueConditions(User user) {
+        return false;
     }
 
-    @Override
-    public void displayTopUsers() {
-        super.displayTopUsers();
-    }
-
-    @Override
-    public void checkLeagueConditions() {
-        super.checkLeagueConditions();
-    }
 }

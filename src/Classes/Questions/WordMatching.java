@@ -1,42 +1,14 @@
 package Classes.Questions;
 
 import AbstractClasses.AQuestion;
+import Classes.Questions.Contents.StringContent;
 
 import java.util.Dictionary;
+import java.util.HashMap;
 
-public class WordMatching extends AQuestion {
+public class WordMatching extends AQuestion<StringContent,StringContent> {
 
-    public WordMatching() {
-        setQuestionPoint(5);
-    }
-
-    @Override
-    public Integer getQuestionNumber() {
-        return super.getQuestionNumber();
-    }
-
-    @Override
-    public void setQuestionNumber(Integer questionNumber) {
-        super.setQuestionNumber(questionNumber);
-    }
-
-    @Override
-    public Integer getQuestionPoint() {
-        return super.getQuestionPoint();
-    }
-
-    @Override
-    public void setQuestionPoint(Integer questionPoint) {
-        super.setQuestionPoint(questionPoint);
-    }
-
-    @Override
-    public Dictionary<String, Integer> getQuestionContent() {
-        return super.getQuestionContent();
-    }
-
-    @Override
-    public void setQuestionContent(Dictionary<String, Integer> questionContent) {
-        super.setQuestionContent(questionContent);
+    public WordMatching(HashMap<StringContent,StringContent> questionContent) {
+        super(5, questionContent);
     }
 }
