@@ -1,6 +1,6 @@
 package FileIO;
 
-import AbstractClasses.AQuestion;
+import Classes.User;
 import Factory.LanguageFactory;
 import Factory.UserFactory;
 
@@ -36,56 +36,65 @@ public class CSVReader {
     public void ParseLanguageCSV(LanguageFactory languageFactory) throws IOException {
         while (true) {
             String line = languagesReader.readLine();
+            ArrayList<Language> languagesOfApp = new ArrayList<>();
             if (line != null) {
-                String[] languageAndLine = line.split(",", 2);
+                String[] languageSplit = line.split(",", 2);
                 // Language object initialization
-                Language language = new Language(languageAndLine[0]);
-                System.out.println(languageAndLine[0]);
-                String[] unitNums = languageAndLine[1].split("UNIT[1-9][0-9]*");
-                ArrayList<Unit> units = new ArrayList<>();
-                for (int i = 1; i < unitNums.length; i++) {
+                Language language = new Language(languageSplit[0]);
+                System.out.println(languageSplit[0]);
+                String[] unitSplit = languageSplit[1].split("UNIT[1-9][0-9]*");
+//                ArrayList<Unit> unitsOfLanguage = new ArrayList<>();
+                for (int i = 1; i < unitSplit.length; i++) {
                     // Unit object initialization
 //                    Unit unit = new Unit(i);
-                    System.out.println("UNIT" + i + " " + unitNums[i]);
-                    ArrayList<Quiz> quizzes = new ArrayList<>();
-                    String[] unitContents = unitNums[i].split("QUIZ[1-9][0-9]*");
-                    for (int j = 1; j < unitContents.length; j++) {
+//                    System.out.println("UNIT" + i + " " + unitSplit[i]);
+                    String[] quizSplit = unitSplit[i].split("QUIZ[1-9][0-9]*");
+                    Unit unit = new Unit(i);
+//                    ArrayList<Quiz> quizzesOfUnit = new ArrayList<>();
+                    for (int j = 1; j < quizSplit.length; j++) {
 //                        System.out.println("QUIZ" + j + " " + unitContents[j].split(",")[1]);
-                        String[] quizQuestions = unitContents[j].split(",")[1].split(":");
-                        ArrayList<AQuestion> questions = new ArrayList<>();
-                        for (String question : quizQuestions) {
+                        String[] questionSplit = quizSplit[j].split(",")[1].split(":");
+                        Quiz quiz = new Quiz(j);
+//                        ArrayList<AQuestion> questionsOfQuiz = new ArrayList<>();
+                        for (String question : questionSplit) {
                             int numberOfQuestion = Integer.parseInt(question.substring(0, question.length() - 1));
                             // if it is Reading Question
                             if (question.charAt(question.length() - 1) == 'R') {
                                 for (int x = 0; x < numberOfQuestion; x++) {
-                                    questions.add(languageFactory.generateReadingQ());
+                                    quiz.addChildToArray((languageFactory.generateReadingQ()));
                                 }
                             }
                             // if it is Listening Question
                             if (question.charAt(question.length() - 1) == 'L') {
                                 for (int x = 0; x < numberOfQuestion; x++) {
-                                    questions.add(languageFactory.generateListeningQ());
+                                    quiz.addChildToArray(languageFactory.generateListeningQ());
                                 }
                             }
                             // if it is Speaking Question
                             if (question.charAt(question.length() - 1) == 'S') {
                                 for (int x = 0; x < numberOfQuestion; x++) {
-                                    questions.add(languageFactory.generateSpeakingQ());
+                                    quiz.addChildToArray(languageFactory.generateSpeakingQ());
                                 }
                             }
                             // if it is Word Matching Question
                             if (question.charAt(question.length() - 1) == 'W') {
                                 for (int x = 0; x < numberOfQuestion; x++) {
-                                    questions.add(languageFactory.generateWordMatchingQ());
+                                    quiz.addChildToArray(languageFactory.generateWordMatchingQ());
                                 }
                             }
                         }
-                        Quiz quiz = new Quiz(j, questions);
-                        quizzes.add(quiz);
+                        unit.addChildToArray(quiz);
+//                        quiz.setQuestions(questionsOfQuiz);
+//                        quizzesOfUnit.add(quiz);
                     }
-                    Unit unit= new Unit(i, unitNums);
-                    units.add(unit);
+                    language.addChildToArray(unit);
+//                    unit.setQuizzes(quizzesOfUnit);
+//                    unitsOfLanguage.add(unit);
                 }
+//                language.setUnits(unitsOfLanguage);
+                languageFactory.addToFactory(language);
+//                languagesOfApp.add(language);
+//                languageFactory.AddLanguage(language);
             } else {
                 System.out.println("All the lines have been read.");
                 break;
@@ -100,8 +109,19 @@ public class CSVReader {
             String line = usersReader.readLine();
             if (line != null) {
                 String[] userValues = line.split(";"); //index 0 = username, index 1 = password
-                userFactory.Generate(userValues);
-                randomizer.generateLangChoice(languages);
+                User user = new User(userValues[0], userValues[1]);
+
+                Language languageChoiceOfUser = randomizer.generateLangChoice(languages);
+                int streakOfUser = randomizer.generateNumberOfDaysInStreak();
+                int takenQuizAmount = randomizer.generateTakenQuizAmount(languageChoiceOfUser);
+
+                user.setChosenLanguage(languageChoiceOfUser);
+                user.setNumberOfDaysInStreak(streakOfUser);
+                user.setNumberOfQuizzes(takenQuizAmount);
+                user.setUnitProgression(languageChoiceOfUser.findUnitProgression(takenQuizAmount));
+
+                userFactory.addToFactory(user);
+
             } else {
                 System.out.println("All the lines have been read.");
                 break;

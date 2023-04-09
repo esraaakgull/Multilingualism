@@ -1,16 +1,25 @@
 package Classes;
 
 
-import java.util.Random;
-
 public class User {
     String username;
     String password;
     int numberOfDaysInStreak;
     int numberOfQuizzes;
+    int unitProgression;
     int point;
-    Language langChoice;
+    Language chosenLanguage;
     Unit unit;
+
+    public int getUnitProgression() {
+        return unitProgression;
+    }
+
+    public void setUnitProgression(int unitProgression) {
+        this.unitProgression = unitProgression;
+    }
+
+
 
 
 //    League league;
@@ -33,14 +42,24 @@ public class User {
         return numberOfDaysInStreak;
     }
 
+    public void setNumberOfDaysInStreak(int numberOfDaysInStreak) {
+        this.numberOfDaysInStreak = numberOfDaysInStreak;
+    }
+
     public int getNumberOfQuizzes() {
         return numberOfQuizzes;
+    }
+    public void setNumberOfQuizzes(int numberOfQuizzes){
+        this.numberOfQuizzes = numberOfQuizzes;
     }
     public int getPoints() {
         return point;
     }
-    public Language getLangChoice() {
-        return langChoice;
+    public Language getChosenLanguage() {
+        return chosenLanguage;
+    }
+    public void setChosenLanguage(Language chosenLanguage){
+        this.chosenLanguage = chosenLanguage;
     }
     public Unit getUnit() {
         return unit;

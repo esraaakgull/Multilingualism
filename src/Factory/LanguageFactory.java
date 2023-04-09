@@ -12,28 +12,29 @@ import utils.Randomizer;
 import java.util.HashMap;
 import java.util.Random;
 
-public class LanguageFactory implements IFactory<String>, ICollection<HashMap<String, Language>> {
+public class LanguageFactory implements IFactory<Language>, ICollection<HashMap<String, Language>> {
     // Using a hashmap instead of arraylist helps with search functions,
     // Language name is the key of the list, as well as a parameter inside Language class
-    protected HashMap<String, Language> languages;
+    protected HashMap<String, Language> languages = new HashMap<>();
 
-    public void CreateLanguage(String languageName) {
-        Language language = new Language(languageName);
-        languages.put(languageName, language);
-    }
+//    public void AddLanguage(Language newLanguage) {
+////        Language language = new Language(languageName);
+//        this.languages.put(newLanguage.getName(), newLanguage);
+//    }
 
     Randomizer randomizer = new Randomizer();
     Random rand = new Random();
+
+    @Override
+    public void addToFactory(Language sourceValue) {
+        languages.put(sourceValue.getName(), sourceValue);
+    }
 
     @Override
     public HashMap<String, Language> getCollection() {
         return this.languages;
     }
 
-    @Override
-    public void Generate(String sourceValue) {
-
-    }
 
     public Reading generateReadingQ() {
         String str1 = randomizer.generateRandomString();
@@ -73,5 +74,6 @@ public class LanguageFactory implements IFactory<String>, ICollection<HashMap<St
         }
         return new WordMatching(hm);
     }
+
 
 }

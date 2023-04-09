@@ -24,8 +24,12 @@ public class Randomizer {
         return languages[languageNumber];
     }
 
+    public int generateTakenQuizAmount(Language language){
+        return generateRandomNumberBetween(6, language.getTotalQuizAmount());
+    }
+
     public String generateRandomString() {
-        int length = random.nextInt();
+        int length = random.nextInt(4,8);
         StringBuilder sb = new StringBuilder(length);
         for (int i = 0; i < length; i++) {
             int randomIndex = SECURE_RANDOM.nextInt(CHARACTERS.length());
@@ -33,5 +37,9 @@ public class Randomizer {
             sb.append(randomChar);
         }
         return sb.toString();
+    }
+
+    public int generateRandomNumberBetween(int floor, int ceiling){
+        return random.nextInt(floor, ceiling);
     }
 }

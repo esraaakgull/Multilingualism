@@ -24,7 +24,6 @@ public class Main {
             CSVReader reader = new CSVReader(bookPath, usersPath);
             reader.ParseLanguageCSV(languageFactory);
             reader.ParseUsersCSV(languageFactory, userFactory);
-
         } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();

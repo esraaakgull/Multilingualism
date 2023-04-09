@@ -1,23 +1,21 @@
 package Classes;
 
 import AbstractClasses.AQuestion;
-import Classes.Questions.Listening;
-import Classes.Questions.Reading;
-import Classes.Questions.Speaking;
-import Classes.Questions.WordMatching;
+import Classes.Questions.*;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Random;
 
-public class Quiz {
+public class Quiz implements IParentOf<AQuestion> {
     Integer quizNumber;
     Integer totalQuizPoints;
 
-    AQuestion[] questions;
+    ArrayList<AQuestion> questions = new ArrayList<>();
     Random rand = new Random();
 
-    public Quiz(Integer quizNumber, AQuestion[] question) {
+    public Quiz(Integer quizNumber) {
         this.quizNumber = quizNumber;
-        this.questions = question;
     }
 
     public Integer getQuizNumber() {
@@ -47,5 +45,14 @@ public class Quiz {
     // according to correct number of question and type total point will be calculated
     int calcTotalPoints() {
         return 0;
+    }
+
+//    public void setQuestions(ArrayList<AQuestion> questionsArr){
+//        this.questions = questionsArr.toArray(new AQuestion[0]);
+//    }
+
+    @Override
+    public void addChildToArray(AQuestion child) {
+        this.questions.add(child);
     }
 }
