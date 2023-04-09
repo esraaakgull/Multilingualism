@@ -1,23 +1,22 @@
 package Classes;
 
 
-import java.util.Random;
-
 public class User {
-    String username;
-    String password;
-    int numberOfDaysInStreak;
-    int numberOfQuizzes;
-    int point;
-    Language langChoice;
-    Unit unit;
+    private String username;
+    private String password;
+    private int numberOfDaysInStreak;
+    private int numberOfQuizzes;
+    private int point;
+    private Language langChoice;
+    private Unit unit;
 
-
-//    League league;
-
-    public User(String username, String password){
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+
+    public int getPoint() {
+        return point;
     }
 
     public String getUsername() {
@@ -36,15 +35,19 @@ public class User {
     public int getNumberOfQuizzes() {
         return numberOfQuizzes;
     }
+
     public int getPoints() {
         return point;
     }
+
     public Language getLangChoice() {
         return langChoice;
     }
+
     public Unit getUnit() {
         return unit;
     }
+
     void endQuiz() {
     }
 

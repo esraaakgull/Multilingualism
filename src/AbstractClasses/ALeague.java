@@ -3,33 +3,30 @@ package AbstractClasses;
 import Classes.User;
 
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.Objects;
 
 public abstract class ALeague {
-    ArrayList<User> userList;
+    public ArrayList<User> userList;
 
     public void addUserToTheLig(User user) {
         userList.add(user);
+        checkLeagueConditions(user, userList);
     }
 
-//    public void removeUserFromTheLig(User user) {
-//
-//    }
-
-    public void displayTopUsers(int amount) {
-        userList.sort(Comparator.comparing(User::getPoints));
-        while (amount < userList.size()) {
-            if (userList.get(amount).getPoints() == userList.get(amount + 1).getPoints()){
-                amount += 1;
-            } else {
-                break;
-            }
+    public boolean isUserInTop(User user, ArrayList<User> userList, int top) {
+        for (int i = 0; i < top; i++) {
+            if (Objects.equals(userList.get(i).getUsername(), user.getUsername())) return true;
         }
-        for (int i = 0; i < amount; i++) {
-            if (i < userList.size()) System.out.println(userList.get(i));
-        }
+        return false;
     }
 
+    public boolean checkLeagueConditions(User user, ArrayList<User> userList) {
+        return false;
+    }
 
-    protected abstract boolean passesLeagueConditions(User user);
+    public void displayTopUsers() {
+        for (int i = 0; i < 3; i++) {
+            System.out.println(userList.get(i));
+        }
+    }
 }

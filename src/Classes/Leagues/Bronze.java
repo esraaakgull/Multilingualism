@@ -3,7 +3,10 @@ package Classes.Leagues;
 import AbstractClasses.ALeague;
 import Classes.User;
 
+import java.util.ArrayList;
+
 public class Bronze extends ALeague {
+
     public Bronze() {
     }
 
@@ -13,8 +16,7 @@ public class Bronze extends ALeague {
     }
 
     @Override
-    protected boolean passesLeagueConditions(User user) {
-        return false;
+    public void displayTopUsers() {
+        super.displayTopUsers();
     }
-
 }
