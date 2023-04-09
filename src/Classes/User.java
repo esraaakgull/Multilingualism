@@ -1,6 +1,10 @@
 package Classes;
 
 
+import Classes.LanguageBook.Language;
+import Classes.LanguageBook.Quiz;
+import utils.Randomizer;
+
 public class User {
     String username;
     String password;
@@ -16,7 +20,7 @@ public class User {
     }
 
     public String getUsername() {
-        return username;
+        return this.username;
     }
 
     public String getPassword() {
@@ -59,17 +63,17 @@ public class User {
         this.chosenLanguage = chosenLanguage;
     }
 
-   public void startTakingQuizzes() {
+   public void startTakingQuizzes(Randomizer randomizer) {
         int totalPointsEarned = 0;
         int reducedQuizAmount = this.numberOfQuizzes;
         for (int i = 0; i < unitProgression; i++) {
             if (i == unitProgression - 1) {
                 for (int j = 0; j<reducedQuizAmount; j++){
-                    totalPointsEarned = chosenLanguage.getCollection().get(i).getCollection().get(j).solveQuiz();
+                    totalPointsEarned = chosenLanguage.getCollection().get(i).getCollection().get(j).solveQuiz(randomizer);
                 }
             } else {
                 for (Quiz quiz : chosenLanguage.getCollection().get(i).getCollection()) {
-                    totalPointsEarned += quiz.solveQuiz();
+                    totalPointsEarned += quiz.solveQuiz(randomizer);
                     reducedQuizAmount--;
                 }
             }

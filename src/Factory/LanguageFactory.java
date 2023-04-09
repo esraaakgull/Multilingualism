@@ -1,6 +1,6 @@
 package Factory;
 
-import Classes.Language;
+import Classes.LanguageBook.Language;
 import Classes.Questions.Contents.AudioContent;
 import Classes.Questions.Contents.StringContent;
 import Classes.Questions.Listening;
@@ -13,14 +13,8 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class LanguageFactory implements IFactory<Language>, ICollection<HashMap<String, Language>> {
-    // Using a hashmap instead of arraylist helps with search functions,
-    // Language name is the key of the list, as well as a parameter inside Language class
-    protected HashMap<String, Language> languages = new HashMap<>();
 
-//    public void AddLanguage(Language newLanguage) {
-////        Language language = new Language(languageName);
-//        this.languages.put(newLanguage.getName(), newLanguage);
-//    }
+    protected HashMap<String, Language> languages = new HashMap<>();
 
     Randomizer randomizer = new Randomizer();
     Random rand = new Random();
@@ -34,7 +28,6 @@ public class LanguageFactory implements IFactory<Language>, ICollection<HashMap<
     public HashMap<String, Language> getCollection() {
         return this.languages;
     }
-
 
     public Reading generateReadingQ() {
         String str1 = randomizer.generateRandomString();
@@ -74,6 +67,4 @@ public class LanguageFactory implements IFactory<Language>, ICollection<HashMap<
         }
         return new WordMatching(hm);
     }
-
-
 }

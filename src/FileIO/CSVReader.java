@@ -4,57 +4,51 @@ import Classes.User;
 import Factory.LanguageFactory;
 import Factory.UserFactory;
 
-import java.io.IOException;  // Import the IOException class to handle errors
+import java.io.IOException;
 
-import Classes.Language;
+import Classes.LanguageBook.Language;
 
-import Classes.Quiz;
-import Classes.Unit;
+import Classes.LanguageBook.Quiz;
+import Classes.LanguageBook.Unit;
 import utils.Randomizer;
+import utils.Sorter;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.ArrayList;
 
 public class CSVReader {
     private final String languagesPath;
     private final String usersPath;
     private final BufferedReader languagesReader;
     private final BufferedReader usersReader;
+    private final Sorter sorter;
 
-    public Language[] generatedLanguages;
-
-    //    private final Matcher matcher = Pattern.compile();
-    public CSVReader(String languagesPath, String usersPath) throws FileNotFoundException {
+    public CSVReader(String languagesPath, String usersPath, Sorter sorter) throws FileNotFoundException {
         this.languagesPath = languagesPath;
         this.usersPath = usersPath;
         this.languagesReader = new BufferedReader(new FileReader(this.languagesPath));
         this.usersReader = new BufferedReader(new FileReader(this.usersPath));
+        this.sorter = sorter;
     }
 
     public void ParseLanguageCSV(LanguageFactory languageFactory) throws IOException {
         while (true) {
             String line = languagesReader.readLine();
-            ArrayList<Language> languagesOfApp = new ArrayList<>();
             if (line != null) {
                 String[] languageSplit = line.split(",", 2);
                 // Language object initialization
                 Language language = new Language(languageSplit[0]);
                 String[] unitSplit = languageSplit[1].split("UNIT[1-9][0-9]*");
-//                ArrayList<Unit> unitsOfLanguage = new ArrayList<>();
+
                 for (int i = 1; i < unitSplit.length; i++) {
-                    // Unit object initialization
-//                    Unit unit = new Unit(i);
-//                    System.out.println("UNIT" + i + " " + unitSplit[i]);
+
                     String[] quizSplit = unitSplit[i].split("QUIZ[1-9][0-9]*");
                     Unit unit = new Unit(i);
-//                    ArrayList<Quiz> quizzesOfUnit = new ArrayList<>();
                     for (int j = 1; j < quizSplit.length; j++) {
-//                        System.out.println("QUIZ" + j + " " + unitContents[j].split(",")[1]);
                         String[] questionSplit = quizSplit[j].split(",")[1].split(":");
                         Quiz quiz = new Quiz(j);
-//                        ArrayList<AQuestion> questionsOfQuiz = new ArrayList<>();
+
                         for (String question : questionSplit) {
                             int numberOfQuestion = Integer.parseInt(question.substring(0, question.length() - 1));
                             // if it is Reading Question
@@ -88,7 +82,7 @@ public class CSVReader {
                 }
                 languageFactory.addToFactory(language);
             } else {
-                System.out.println("All the lines have been read.");
+                System.out.println("Languages file has been read.");
                 break;
             }
         }
@@ -108,15 +102,21 @@ public class CSVReader {
                 int takenQuizAmount = randomizer.generateTakenQuizAmount(languageChoiceOfUser);
 
                 user.setChosenLanguage(languageChoiceOfUser);
+                languageChoiceOfUser.addUser(user);
                 user.setNumberOfDaysInStreak(streakOfUser);
                 user.setNumberOfQuizzes(takenQuizAmount);
                 user.setUnitProgression(languageChoiceOfUser.findUnitProgression(takenQuizAmount));
-                user.startTakingQuizzes();
+                user.startTakingQuizzes(randomizer);
 
                 userFactory.addToFactory(user);
 
             } else {
-                System.out.println("All the lines have been read.");
+                for (Language language : languageFactory.getCollection().values()){
+                    sorter.sortArraylist(language.users);
+                    language.assignUsersToLeagues();
+                    language.sortLeagues(sorter);
+                }
+                System.out.println("Users file has been read.");
                 break;
             }
         }

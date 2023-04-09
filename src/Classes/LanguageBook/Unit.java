@@ -1,4 +1,4 @@
-package Classes;
+package Classes.LanguageBook;
 
 import Factory.ICollection;
 
@@ -19,19 +19,6 @@ public class Unit implements IParentOf<Quiz>, ICollection<ArrayList<Quiz>> {
     public Integer getNumberOfQuizzes() {
         return quizzes.size();
     }
-
-//    public void addQuiz(Quiz quiz) {
-//        this.quizzes.add(quiz);
-//    }
-
-    public void addQuiz(Quiz quiz){
-        this.quizzes.add(quiz);
-    }
-
-//    public void setQuizzes(ArrayList<Quiz> quizArr){
-//        this.quizzes = quizArr.toArray(new Quiz[0]);
-//    }
-
 
     @Override
     public void addChildToArray(Quiz child) {
