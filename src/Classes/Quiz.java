@@ -1,13 +1,13 @@
 package Classes;
 
 import AbstractClasses.AQuestion;
-import Classes.Questions.*;
+import Factory.ICollection;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Quiz implements IParentOf<AQuestion> {
+public class Quiz implements IParentOf<AQuestion>, ICollection<ArrayList<AQuestion>> {
     Integer quizNumber;
     Integer totalQuizPoints;
 
@@ -30,12 +30,14 @@ public class Quiz implements IParentOf<AQuestion> {
         this.totalQuizPoints = totalQuizPoints;
     }
 
-    void startQuiz() {
-        // will take number of questions in each type
-        // according to number of question, number of correct question will be generated randomly
-        int numberOfCorrectQuestion = rand.nextInt(0, 10);
-        // here should be a loop for correct questions
-
+    int solveQuiz() {
+        int pointsEarned = 0;
+        for (AQuestion question : questions) {
+            if (rand.nextBoolean()) {
+                pointsEarned += question.getQuestionPoint();
+            }
+        }
+        return pointsEarned;
     }
 
     void endQuiz() {
@@ -54,5 +56,10 @@ public class Quiz implements IParentOf<AQuestion> {
     @Override
     public void addChildToArray(AQuestion child) {
         this.questions.add(child);
+    }
+
+    @Override
+    public ArrayList<AQuestion> getCollection() {
+        return this.questions;
     }
 }

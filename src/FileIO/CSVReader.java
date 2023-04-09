@@ -41,7 +41,6 @@ public class CSVReader {
                 String[] languageSplit = line.split(",", 2);
                 // Language object initialization
                 Language language = new Language(languageSplit[0]);
-                System.out.println(languageSplit[0]);
                 String[] unitSplit = languageSplit[1].split("UNIT[1-9][0-9]*");
 //                ArrayList<Unit> unitsOfLanguage = new ArrayList<>();
                 for (int i = 1; i < unitSplit.length; i++) {
@@ -84,17 +83,10 @@ public class CSVReader {
                             }
                         }
                         unit.addChildToArray(quiz);
-//                        quiz.setQuestions(questionsOfQuiz);
-//                        quizzesOfUnit.add(quiz);
                     }
                     language.addChildToArray(unit);
-//                    unit.setQuizzes(quizzesOfUnit);
-//                    unitsOfLanguage.add(unit);
                 }
-//                language.setUnits(unitsOfLanguage);
                 languageFactory.addToFactory(language);
-//                languagesOfApp.add(language);
-//                languageFactory.AddLanguage(language);
             } else {
                 System.out.println("All the lines have been read.");
                 break;
@@ -119,6 +111,7 @@ public class CSVReader {
                 user.setNumberOfDaysInStreak(streakOfUser);
                 user.setNumberOfQuizzes(takenQuizAmount);
                 user.setUnitProgression(languageChoiceOfUser.findUnitProgression(takenQuizAmount));
+                user.startTakingQuizzes();
 
                 userFactory.addToFactory(user);
 

@@ -1,13 +1,12 @@
 package Classes;
 
-import Classes.Questions.IParentOf;
+import Factory.ICollection;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class Unit implements IParentOf<Quiz> {
-    Integer unitNumber;
-    ArrayList<Quiz> quizzes = new ArrayList<>();
+public class Unit implements IParentOf<Quiz>, ICollection<ArrayList<Quiz>> {
+    private Integer unitNumber;
+    private ArrayList<Quiz> quizzes = new ArrayList<>();
 
     public Unit(Integer unitNum) {
         this.unitNumber = unitNum;
@@ -19,10 +18,6 @@ public class Unit implements IParentOf<Quiz> {
 
     public Integer getNumberOfQuizzes() {
         return quizzes.size();
-    }
-
-    public ArrayList<Quiz> getQuizzes() {
-        return quizzes;
     }
 
 //    public void addQuiz(Quiz quiz) {
@@ -41,5 +36,10 @@ public class Unit implements IParentOf<Quiz> {
     @Override
     public void addChildToArray(Quiz child) {
         this.quizzes.add(child);
+    }
+
+    @Override
+    public ArrayList<Quiz> getCollection() {
+        return this.quizzes;
     }
 }

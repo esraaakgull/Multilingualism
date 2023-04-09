@@ -1,11 +1,11 @@
 package Classes;
 
-import Classes.Questions.IParentOf;
+import Factory.ICollection;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Language implements IParentOf<Unit> {
+public class Language implements IParentOf<Unit>, ICollection<ArrayList<Unit>> {
     private final String name;
     //    private Integer i = 0;
     private ArrayList<Unit> units = new ArrayList<>();
@@ -14,10 +14,6 @@ public class Language implements IParentOf<Unit> {
 
     public Language(String name) {
         this.name = name;
-    }
-
-    public ArrayList<Unit> getUnits() {
-        return units;
     }
 
 //    public void addUnit(Unit unit) {
@@ -44,14 +40,20 @@ public class Language implements IParentOf<Unit> {
     @Override
     public void addChildToArray(Unit child) {
         this.units.add(child);
-//        child.getNumberOfQuizzes();
+        int prevLength = progressionTracker.size();
         for (int i = 0; i < child.getNumberOfQuizzes(); i++) {
-            progressionTracker.put(i, this.units.size() + 1);
+            progressionTracker.put(prevLength+i, this.units.size() + 1);
+
         }
         this.totalQuizAmount += child.getNumberOfQuizzes();
     }
 
-    public int findUnitProgression(int takenQuizAmount){
+    public Integer findUnitProgression(int takenQuizAmount){
         return progressionTracker.get(takenQuizAmount);
+    }
+
+    @Override
+    public ArrayList<Unit> getCollection() {
+        return this.units;
     }
 }
