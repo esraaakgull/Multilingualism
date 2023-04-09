@@ -34,7 +34,7 @@ public abstract class ALeague{
     }
 
     public String getTopUsers(int amount) {
-        String returnedString = "";
+        String res = "";
         while (amount < usersInLeague.size()) {
             if (usersInLeague.get(amount).getPoints() == usersInLeague.get(amount + 1).getPoints()){
                 amount += 1;
@@ -43,8 +43,10 @@ public abstract class ALeague{
             }
         }
         for (int i = 0; i < amount; i++) {
-            if (i < usersInLeague.size()) return returnedString.concat((i+1) + ". "+ usersInLeague.get(i).getUsername());
+            if (i < usersInLeague.size())
+                res = res.concat( " " + (i + 1) + "." + usersInLeague.get(i).getUsername());
         }
+        if (!res.equals("")) return res;
         return "No users in league " + getLeagueName();
     }
 }
